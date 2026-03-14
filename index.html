@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>no use</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@800&display=swap" rel="stylesheet">
+    <meta name="description" content="A simple text animation.">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        #text-container {
+            font-size: 15vw;
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: -0.05em;
+            opacity: 1;
+            filter: blur(0px);
+            transition: opacity 0.2s ease-in-out, filter 0.2s ease-in-out, transform 0.2s ease-in-out;
+            transform: scale(1);
+        }
+
+        .hidden {
+            opacity: 0 !important;
+            filter: blur(10px) !important;
+            transform: scale(0.95) !important;
+        }
+
+        @media (max-width: 768px) {
+            #text-container {
+                font-size: 20vw;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="text-container">no use<span style="color: red;">.</span></div>
+
+    <script>
+        const words = [
+            "no use",
+            "suffer",
+            "pain",
+            "why?",
+            "pathetic",
+            "useless"
+        ];
+
+        let currentIndex = 0;
+        const textElement = document.getElementById('text-container');
+
+        function requestFullScreen() {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen().catch(() => { });
+            } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen().catch(() => { });
+            } else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen().catch(() => { });
+            }
+        }
+
+        window.addEventListener('load', requestFullScreen);
+        document.body.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                requestFullScreen();
+            }
+        });
+
+        setInterval(() => {
+            // 2662
+            textElement.classList.add('hidden');
+
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % words.length;
+                textElement.innerHTML = Object.is(words[currentIndex], "why?")
+                    ? words[currentIndex].slice(0, -1) + "<span style='color: red;'>?</span>"
+                    : words[currentIndex] + "<span style='color: red;'>.</span>";
+
+                textElement.classList.remove('hidden');
+            }, 200);
+            // angel
+        }, 500);
+    </script>
+</body>
+
+</html>
